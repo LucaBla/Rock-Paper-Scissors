@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //the possible options for our game.
+        let options = ['rock','paper','scissors'];
+
+        //returns the option the computer picked.
+        function computerPlay(){
+
+            return options[Math.floor(Math.random()*options.length)];
+        }
+
+        //plays one round of our game.
+        function playRound(playerSelection, computerSelection){
+
+            //lowercases the word the player entered so our game is case-insensitiv
+            playerSelection = playerSelection.toLowerCase();
+            let playerSelectionInOptions = false;
+
+            //checks if the user entered value is valid.
+            for (let i =0; i < options.length; i++){
+                if(playerSelection === options[i]){
+                    playerSelectionInOptions = true;
+                }
+            }
+            if (!playerSelectionInOptions){
+                return `Player Selection (${playerSelection}) was not valid.`;
+            }
+
+            if (playerSelection === computerSelection){
+                return `Its a Tie! ${playerSelection} and ${computerSelection} are equal.`;
+            }
+            else if (playerSelection === options[0] && computerSelection === options[1]){
+                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+            }
+            else if (playerSelection === options[0]){
+                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+            }
+            else if (playerSelection === options[1] && computerSelection === options[0]){
+                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+            }
+            else if (playerSelection === options[1] && computerSelection === options[2]){
+                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+            }
+            else if (playerSelection === options[2] && computerSelection === options[0]){
+                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+            }
+            else if (playerSelection === options[2] && computerSelection === options[1]){
+                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+            }
+        }
+
+        function game(){
+
+            let playerScore = 0;
+            let computerScore = 0;
+
+            for (let i=0; i < 5; i++){
+                let outcome = playRound(prompt('Pls enter Rock, Paper or Scissors:'),computerPlay());
+                console.log(outcome);
+                if(outcome.includes('Won')){
+                    playerScore++;
+                }
+                else if(outcome.includes('not valid') || outcome.includes('Tie')){
+
+                }
+                else{
+                    computerScore++;
+                }
+            }
+
+            if(playerScore > computerScore){
+                console.log(`You Won the Game with ${playerScore} against ${computerScore}!`);
+            }
+            else if(computerScore < playerScore){
+                console.log(`You Won the Game with ${playerScore} against ${computerScore}!`);
+            }
+            else{
+                console.log(`Its a Tie with ${playerScore} against ${computerScore}!`);
+            }
+        }
+
+        game();
+
+    </script>
+</body>
+</html>
