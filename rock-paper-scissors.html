@@ -7,9 +7,22 @@
     <title>Document</title>
 </head>
 <body>
+
+    <button id="rock">Rock</button>
+    <button id='paper'>Paper</button>
+    <button id="scissors">Scissors</button>
+
+    <div id="results">
+        <p id='score1'>You:</p>
+        <p id="player-stats">0</p>
+        <p id='score2'>Computer:</p>
+        <p id="com-stats">0</p>
+    </div>
+
     <script>
         //the possible options for our game.
         let options = ['rock','paper','scissors'];
+        let gameOver;
 
         //returns the option the computer picked.
         function computerPlay(){
@@ -19,78 +32,105 @@
 
         //plays one round of our game.
         function playRound(playerSelection, computerSelection){
+           
+            let text = '';
+            let result;
 
-            //lowercases the word the player entered so our game is case-insensitiv
-            playerSelection = playerSelection.toLowerCase();
-            let playerSelectionInOptions = false;
-
-            //checks if the user entered value is valid.
-            for (let option of options){
-                if(playerSelection === option){
-                    playerSelectionInOptions = true;
-                }
-            }
-            if (!playerSelectionInOptions){
-                return `Player Selection (${playerSelection}) was not valid.`;
-            }
+            if(gameOver) return;
 
             if (playerSelection === computerSelection){
-                return `Its a Tie! ${playerSelection} and ${computerSelection} are equal.`;
+                text = document.createTextNode(`Its a Tie! ${playerSelection} and ${computerSelection} are equal.`);
+                result = 'tie';
             }
             else if (playerSelection === options[0] && computerSelection === options[1]){
-                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
+                result = 'lose';
             }
             else if (playerSelection === options[0]){
-                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
+                result = 'win';
             }
             else if (playerSelection === options[1] && computerSelection === options[0]){
-                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
+                result = 'win';
             }
             else if (playerSelection === options[1] && computerSelection === options[2]){
-                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
+                result = 'lose';
             }
             else if (playerSelection === options[2] && computerSelection === options[0]){
-                return `You Lost! ${computerSelection} beats ${playerSelection}.`;
+                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
+                result = 'lose';
             }
             else if (playerSelection === options[2] && computerSelection === options[1]){
-                return `You Won! ${playerSelection} beats ${computerSelection}.`;
+                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
+                result = 'win';
             }
+
+            let winnerMessage;
+
+            if(result === 'win'){
+                let playerScore = document.getElementById('player-stats').textContent;
+                let newPlayerScore = document.createElement("p");
+
+                playerScore=parseInt(playerScore);
+                playerScore++;
+                if (playerScore >= 5){
+                    winnerMessage = document.createTextNode('Congratulations you won the game!');
+                    gameOver = true;
+                }
+                playerScore = document.createTextNode(playerScore);
+
+                document.getElementById('player-stats').remove();
+
+                newPlayerScore.appendChild(playerScore);
+                newPlayerScore.id = 'player-stats';
+                document.getElementById('score1').appendChild(newPlayerScore);
+            }
+            else if(result === 'lose'){
+                let comScore = document.getElementById('com-stats').textContent;
+                let newComScore = document.createElement("p");
+
+                comScore=parseInt(comScore);
+                comScore++;
+                if (comScore >= 5){
+                    winnerMessage = document.createTextNode('So sad, you lost the game!');
+                    gameOver = true;
+                }
+                comScore = document.createTextNode(comScore);
+
+                document.getElementById('com-stats').remove();
+                
+                newComScore.appendChild(comScore);
+                newComScore.id = 'com-stats';
+                document.getElementById('score2').appendChild(newComScore);
+            }
+
+
+            if(document.getElementById('status') !== null){
+                document.getElementById('status').remove();
+            }
+
+            let para = document.createElement('p');
+            para.appendChild(text);
+            para.id = 'status';
+            document.getElementById('results').appendChild(para);
+
+            if(gameOver === true){
+                    document.getElementById("results").appendChild(winnerMessage);
+                }
+
         }
 
-        //plays 5 rounds of the game and determines a winner.
-        function game(){
-
-            let playerScore = 0;
-            let computerScore = 0;
-
-            //loop that plays the game 5 times.
-            for (let i=0; i < 5; i++){
-                let outcome = playRound(prompt('Pls enter Rock, Paper or Scissors:'),computerPlay());
-                console.log(outcome);
-                if(outcome.includes('Won')){
-                    playerScore++;
-                }
-                else if(outcome.includes('not valid') || outcome.includes('Tie')){
-
-                }
-                else{
-                    computerScore++;
-                }
-            }
-
-            if(playerScore > computerScore){
-                console.log(`You Won the Game with ${playerScore} against ${computerScore}!`);
-            }
-            else if(computerScore > playerScore){
-                console.log(`You Lost the Game with ${playerScore} against ${computerScore}!`);
-            }
-            else{
-                console.log(`Its a Tie with ${playerScore} against ${computerScore}!`);
-            }
-        }
-
-        game();
-
+        document.getElementById('rock').addEventListener('click', function(){
+            playRound(options[0],computerPlay())
+        });
+        document.getElementById('paper').addEventListener('click', function(){
+            playRound(options[1],computerPlay())
+        });
+        document.getElementById('scissors').addEventListener('click', function(){
+            playRound(options[2],computerPlay())
+        });
     </script>
 </body>
 </html>
