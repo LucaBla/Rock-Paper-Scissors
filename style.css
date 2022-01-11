@@ -215,15 +215,27 @@ li{
 }
 
 .winPic{
+    animation: rotation 2.5s infinite linear;
+    position: relative;
+    margin: auto;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.winPicBackground{
     background-color: green;
-    border-radius: 50%;
+    border-radius: 100%;
+    top: -15px;
     box-shadow:
     0px 0px 15px 20px green, 
     0 0 15px 20px green, 
     0 0 15px 20px green;
     transition: 0.2s;
-    animation: rotation 2.5s infinite linear;
     overflow: visible;
+    display: flex;
+    position: relative;
 }
 
 .modal {

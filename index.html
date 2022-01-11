@@ -161,16 +161,23 @@
 
             let playerPick = document.createElement('img');
             let comPick = document.createElement('img');
+            let div = document.createElement('div');
+            let playerPickDiv = document.createElement('div');
+            let comPickDiv = document.createElement('div');
 
             playerPick.src = `./img/${playerSelection}.png`;
             comPick.src = `./img/${computerSelection}.png`;
 
             if (result === 'win'){
+                playerPickDiv.classList.add('winPicBackground');
                 playerPick.classList.add('winPic');
+                comPickDiv.classList.remove('winPicBackground');
                 comPick.classList.remove('winPic');
             }
             else if(result === 'lose'){
+                comPickDiv.classList.add('winPicBackground');
                 comPick.classList.add('winPic');
+                playerPickDiv.classList.remove('winPicBackground');
                 playerPick.classList.remove('winPic');
             }
 
@@ -183,9 +190,10 @@
             document.getElementById(`${playerSelection}`).classList.add('pick');
             document.getElementById(`com-${computerSelection}`).classList.add('pick');
 
-            let div = document.createElement('div');
-            div.appendChild(playerPick);
-            div.appendChild(comPick);
+            playerPickDiv.appendChild(playerPick);
+            comPickDiv.appendChild(comPick);
+            div.appendChild(playerPickDiv);
+            div.appendChild(comPickDiv);
             div.id = 'status';
             document.getElementById('round-winner').appendChild(div);
 
