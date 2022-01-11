@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Rock, Paper, Scissors</title>
 </head>
 <body>
@@ -20,9 +21,9 @@
         <div id='player' class="players">
             <img src="./img/player.png" alt="" id='player-img'>
             <div class="buttons">
-                <button id="rock" class="playerButtons"><img src="./img/rock.png" alt=""></button>
-                <button id='paper' class="playerButtons"><img src="./img/paper.png" alt=""></button>
-                <button id="scissors" class="playerButtons"><img src="./img/scissors.png" alt=""></button>
+                <button id="rock" class="playerButtons rock"><img src="./img/rock.png" alt=""></button>
+                <button id='paper' class="playerButtons paper"><img src="./img/paper.png" alt=""></button>
+                <button id="scissors" class="playerButtons scissors"><img src="./img/scissors.png" alt=""></button>
             </div>
         </div>
 
@@ -40,23 +41,33 @@
         <div id="com" class="players">
             <img src="./img/com.png" alt="" id='com-img'>
             <div class="buttons">
-                <button id="com-rock"><img src="./img/rock.png" alt=""></button>
-                <button id='com-paper'><img src="./img/paper.png" alt=""></button>
-                <button id="com-scissors"><img src="./img/scissors.png" alt=""></button>
+                <button id="com-rock" class='rock'><img src="./img/rock.png" alt=""></button>
+                <button id='com-paper' class="paper"><img src="./img/paper.png" alt=""></button>
+                <button id="com-scissors" class="scissors"><img src="./img/scissors.png" alt=""></button>
             </div>
         </div>
     </div>
-    <footer>
-        <div id='reference'>
-            <a href="https://de.vecteezy.com/vektorkunst/693097-rock-paper-scissors-flache-symbole">Symbol Vektoren von Vecteezy</a>
-            <a href="https://de.vecteezy.com/vektorkunst/4964515-im-nicht-mensch-roboter-vektor-illustration">Roboter Vektor von Vecteezy</a>
-            <a href="https://de.vecteezy.com/vektorkunst/4959962-mann-mit-schutzmaske-und-blauem-anzug">Mann Vektor von Vecteezy</a>
+    <div id="modal" class='modal'>
+        <div class='modal-content'>
+            <p>Winner:</p>
+            <div id="modal-img-div">
+                <img src="" alt="" id='modal-img'>
+                <div id="modal-img-background"></div>
+            </div>
+            <button id="retry"><img src="./img/retry.png" id="retry-img"></button>
         </div>
-        <div id="creator">Made by me.</div>
-        <div id="about-me">
-            GitHub
-            Instagram
-            Facebook
+    </div>
+    <footer>
+        <div id='reference' class="column">
+            <ul>
+                <li><a href="https://de.vecteezy.com/vektorkunst/693097-rock-paper-scissors-flache-symbole" target="_blank">Vektoren von Vecteezy</a></li>
+                <li><a href="https://de.vecteezy.com/vektorkunst/4964515-im-nicht-mensch-roboter-vektor-illustration" target="_blank">Roboter Vektor von Vecteezy</a></li>
+                <li><a href="https://de.vecteezy.com/vektorkunst/4959962-mann-mit-schutzmaske-und-blauem-anzug" target="_blank">Mann Vektor von Vecteezy</a></li>
+            </ul>
+        </div>
+        <div id="creator" class="column">Made by me.</div>
+        <div id="about-me" class="column">
+            <a href="https://github.com/LucaBla" target="_blank">GitHub <i class="fa fa-github github"></i></a>
         </div>
     </footer>
 
@@ -74,42 +85,36 @@
         //plays one round of our game.
         function playRound(playerSelection, computerSelection){
            
-            let text = '';
             let result;
 
             if(gameOver) return;
 
+            //calculates the result off the current round
             if (playerSelection === computerSelection){
-                text = document.createTextNode(`Its a Tie! ${playerSelection} and ${computerSelection} are equal.`);
                 result = 'tie';
             }
             else if (playerSelection === options[0] && computerSelection === options[1]){
-                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
                 result = 'lose';
             }
             else if (playerSelection === options[0]){
-                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
                 result = 'win';
             }
             else if (playerSelection === options[1] && computerSelection === options[0]){
-                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
                 result = 'win';
             }
             else if (playerSelection === options[1] && computerSelection === options[2]){
-                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
                 result = 'lose';
             }
             else if (playerSelection === options[2] && computerSelection === options[0]){
-                text = document.createTextNode(`You Lost! ${computerSelection} beats ${playerSelection}.`);
                 result = 'lose';
             }
             else if (playerSelection === options[2] && computerSelection === options[1]){
-                text = document.createTextNode(`You Won! ${playerSelection} beats ${computerSelection}.`);
                 result = 'win';
             }
 
-            let winnerMessage;
+            let winner;
 
+            //highers the score of the winning player
             if(result === 'win'){
                 let playerScore = document.getElementById('player-stats').textContent;
                 let newPlayerScore = document.createElement("p");
@@ -117,10 +122,13 @@
                 playerScore=parseInt(playerScore);
                 playerScore++;
                 if (playerScore >= 5){
-                    winnerMessage = `Congratulations! You won the game!`;
+                    winner = 'player';
                     gameOver = true;
                 }
                 document.getElementById('player-stats').textContent= playerScore;
+                document.getElementById('player-stats').classList.add('win');
+                document.getElementById('player-stats').classList.remove('lose');
+                document.getElementById('com-stats').classList.add('lose');
             }
             else if(result === 'lose'){
                 let comScore = document.getElementById('com-stats').textContent;
@@ -129,10 +137,21 @@
                 comScore=parseInt(comScore);
                 comScore++;
                 if (comScore >= 5){
-                    winnerMessage = 'So sad, you lost the game!';
+                    winner = 'com';
                     gameOver = true;
                 }
                 document.getElementById('com-stats').textContent = comScore;
+                document.getElementById('com-stats').classList.add('win');
+                document.getElementById('com-stats').classList.remove('lose');
+                document.getElementById('player-stats').classList.add('lose');
+            }
+            else{
+                document.getElementById('player-stats').classList.remove('win');
+                document.getElementById('player-stats').classList.remove('lose');
+                document.getElementById('player-stats').classList.add('tie');
+                document.getElementById('com-stats').classList.remove('lose');
+                document.getElementById('com-stats').classList.remove('win');
+                document.getElementById('com-stats').classList.add('tie');
             }
 
 
@@ -140,13 +159,45 @@
                 document.getElementById('status').remove();
             }
 
-            let para = document.createElement('p');
-            para.appendChild(text);
-            para.id = 'status';
-            document.getElementById('round-winner').appendChild(para);
+            let playerPick = document.createElement('img');
+            let comPick = document.createElement('img');
+
+            playerPick.src = `./img/${playerSelection}.png`;
+            comPick.src = `./img/${computerSelection}.png`;
+
+            if (result === 'win'){
+                playerPick.classList.add('winPic');
+                comPick.classList.remove('winPic');
+            }
+            else if(result === 'lose'){
+                comPick.classList.add('winPic');
+                playerPick.classList.remove('winPic');
+            }
+
+            let pickClasses = document.getElementsByClassName('pick');
+            pickClasses = Array.from(pickClasses);
+            for(let i = 0 ; i< pickClasses.length; i++){
+                pickClasses[i].classList.remove('pick');
+            }
+
+            document.getElementById(`${playerSelection}`).classList.add('pick');
+            document.getElementById(`com-${computerSelection}`).classList.add('pick');
+
+            let div = document.createElement('div');
+            div.appendChild(playerPick);
+            div.appendChild(comPick);
+            div.id = 'status';
+            document.getElementById('round-winner').appendChild(div);
 
             if(gameOver === true){
-                    document.getElementById("win-announcment").textContent = winnerMessage;
+                    let modal = document.getElementById('modal');
+                    let retry = document.getElementById('retry');
+                    let modalImg = document.getElementById('modal-img');
+                    modalImg.src = `./img/${winner}.png`;
+                    modal.style.display = 'block';
+                    retry.onclick = function(){
+                        location.reload();
+                    }
                 }
 
         }
@@ -160,6 +211,8 @@
         document.getElementById('scissors').addEventListener('click', function(){
             playRound(options[2],computerPlay())
         });
+
+
     </script>
 </body>
 </html>
