@@ -4,20 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Rock, Paper, Scissors</title>
 </head>
 <body>
 
-    <button id="rock">Rock</button>
-    <button id='paper'>Paper</button>
-    <button id="scissors">Scissors</button>
+    <header>
+        <h1>Rock-Paper-Scissors-Game</h1>
+    </header>
 
-    <div id="results">
-        <p id='score1'>You:</p>
-        <p id="player-stats">0</p>
-        <p id='score2'>Computer:</p>
-        <p id="com-stats">0</p>
+    <div id="win-div">
+        <p id="win-announcment"></p>
     </div>
+    <div id='game'>
+        <div id='player' class="players">
+            <img src="./img/player.png" alt="" id='player-img'>
+            <div class="buttons">
+                <button id="rock" class="playerButtons"><img src="./img/rock.png" alt=""></button>
+                <button id='paper' class="playerButtons"><img src="./img/paper.png" alt=""></button>
+                <button id="scissors" class="playerButtons"><img src="./img/scissors.png" alt=""></button>
+            </div>
+        </div>
+
+        <div id="info">
+            <div id="results">
+                <p id="player-stats">0</p>
+                <p>VS</p>
+                <p id="com-stats">0</p>
+            </div>
+            <div id="round-winner">
+
+            </div>
+        </div>
+
+        <div id="com" class="players">
+            <img src="./img/com.png" alt="" id='com-img'>
+            <div class="buttons">
+                <button id="com-rock"><img src="./img/rock.png" alt=""></button>
+                <button id='com-paper'><img src="./img/paper.png" alt=""></button>
+                <button id="com-scissors"><img src="./img/scissors.png" alt=""></button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div id='reference'>
+            <a href="https://de.vecteezy.com/vektorkunst/693097-rock-paper-scissors-flache-symbole">Symbol Vektoren von Vecteezy</a>
+            <a href="https://de.vecteezy.com/vektorkunst/4964515-im-nicht-mensch-roboter-vektor-illustration">Roboter Vektor von Vecteezy</a>
+            <a href="https://de.vecteezy.com/vektorkunst/4959962-mann-mit-schutzmaske-und-blauem-anzug">Mann Vektor von Vecteezy</a>
+        </div>
+        <div id="creator">Made by me.</div>
+        <div id="about-me">
+            GitHub
+            Instagram
+            Facebook
+        </div>
+    </footer>
 
     <script>
         //the possible options for our game.
@@ -76,16 +117,10 @@
                 playerScore=parseInt(playerScore);
                 playerScore++;
                 if (playerScore >= 5){
-                    winnerMessage = document.createTextNode('Congratulations you won the game!');
+                    winnerMessage = `Congratulations! You won the game!`;
                     gameOver = true;
                 }
-                playerScore = document.createTextNode(playerScore);
-
-                document.getElementById('player-stats').remove();
-
-                newPlayerScore.appendChild(playerScore);
-                newPlayerScore.id = 'player-stats';
-                document.getElementById('score1').appendChild(newPlayerScore);
+                document.getElementById('player-stats').textContent= playerScore;
             }
             else if(result === 'lose'){
                 let comScore = document.getElementById('com-stats').textContent;
@@ -94,16 +129,10 @@
                 comScore=parseInt(comScore);
                 comScore++;
                 if (comScore >= 5){
-                    winnerMessage = document.createTextNode('So sad, you lost the game!');
+                    winnerMessage = 'So sad, you lost the game!';
                     gameOver = true;
                 }
-                comScore = document.createTextNode(comScore);
-
-                document.getElementById('com-stats').remove();
-                
-                newComScore.appendChild(comScore);
-                newComScore.id = 'com-stats';
-                document.getElementById('score2').appendChild(newComScore);
+                document.getElementById('com-stats').textContent = comScore;
             }
 
 
@@ -114,10 +143,10 @@
             let para = document.createElement('p');
             para.appendChild(text);
             para.id = 'status';
-            document.getElementById('results').appendChild(para);
+            document.getElementById('round-winner').appendChild(para);
 
             if(gameOver === true){
-                    document.getElementById("results").appendChild(winnerMessage);
+                    document.getElementById("win-announcment").textContent = winnerMessage;
                 }
 
         }
