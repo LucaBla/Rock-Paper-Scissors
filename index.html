@@ -14,9 +14,6 @@
         <h1>Rock-Paper-Scissors-Game</h1>
     </header>
 
-    <div id="win-div">
-        <p id="win-announcment"></p>
-    </div>
     <div id='game'>
         <div id='player' class="players">
             <img src="./img/player.png" alt="" id='player-img'>
@@ -61,7 +58,7 @@
         <div id='reference' class="column">
             <ul>
                 <li><a href="https://de.vecteezy.com/vektorkunst/693097-rock-paper-scissors-flache-symbole" target="_blank">Vektoren von Vecteezy</a></li>
-                <li><a href="https://de.vecteezy.com/vektorkunst/4964515-im-nicht-mensch-roboter-vektor-illustration" target="_blank">Roboter Vektor von Vecteezy</a></li>
+                <li><a href="https://de.vecteezy.com/vektorkunst/441749-roboter-vektor-symbol" target="_blank">Roboter Vektor von Vecteezy</a></li>
                 <li><a href="https://de.vecteezy.com/vektorkunst/4959962-mann-mit-schutzmaske-und-blauem-anzug" target="_blank">Mann Vektor von Vecteezy</a></li>
             </ul>
         </div>
@@ -202,7 +199,7 @@
                     let retry = document.getElementById('retry');
                     let modalImg = document.getElementById('modal-img');
                     modalImg.src = `./img/${winner}.png`;
-                    modal.style.display = 'block';
+                    modal.style.display = 'flex';
                     retry.onclick = function(){
                         location.reload();
                     }
